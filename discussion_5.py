@@ -42,16 +42,13 @@ class Warehouse:
 
 	# Returns the item in the warehouse with the most stock		
 	def get_max_stock(self):
-		most_item = None
 		most_stock = 0
+		most_stock_item = None
 		for item in self.items:
-			if most_item == None:
-				most_item = item.name
+			if item.stock > most_stock:
 				most_stock = item.stock
-			elif most_item < item.stock:
-				most_item = item.name
-				most_stock = item.stock
-		return most_item
+				most_stock_item = item
+		return most_stock_item
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
@@ -97,8 +94,13 @@ class TestAllMethods(unittest.TestCase):
 
 	## Check to see whether warehouse correctly returns the item with the most stock
 	def test_warehouse_max_stocks(self):
-		pass
+		warehouse1 = Warehouse([self.item1, self.item2, self.item4])
+		max_stock = warehouse1.get_max_stock()
+		self.assertEqual(max_stock, self.item4)
 
+		warehouse1.add_item(self.item3)
+		max_stock_now = warehouse1.get_max_stock()
+		self.assertEqual(max_stock_now, self.item3)
 
 	# Check to see whether the warehouse correctly return the item with the highest price
 	def test_warehouse_max_price(self):
